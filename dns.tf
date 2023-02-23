@@ -13,3 +13,11 @@ resource "cloudflare_record" "site_cname" {
   ttl     = 1
   proxied = true
 }
+
+resource "cloudflare_page_rule" "https" {
+  zone_id = data.cloudflare_zones.domain.zones[0].id
+  target  = "*.${var.site_domain}/*"
+  actions {
+    always_use_https = true
+  }
+}
